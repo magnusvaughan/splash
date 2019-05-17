@@ -3,12 +3,13 @@
 
 <head>
     <title>Django blog</title>
+    <link href="{% static 'css/bulma.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
 </head>
 
 <body>
     <header>
-        <h1><a href="{% url 'home' %}">Splash</a></h1>
+        <h1 class="is-size-1"><a href="{% url 'home' %}">Splash</a></h1>
     </header>
     <div>
         {% block content %}
