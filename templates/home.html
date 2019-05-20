@@ -1,8 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-{% for newspaper in object_list %}
-<div class="post-entry">
-    <h2 class="is-size-2"><a href="">{{ newspaper.name }}</a></h2>
-</div>
-{% endfor %}
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container">
+            <div class="columns is-multiline">
+            {% for wordlist in object_list %}
+                <div class="column is-one-quarter has-text-left">
+                    <a href="{% url 'wordlist_detail' wordlist.pk %}">{{ wordlist.date }}</a>
+                    <span>{{ wordlist.newspaper }}</span>
+                </div>
+            {% endfor %}
+            </div>
+            </div>
+        </div>
+    </section>
 {% endblock content %}

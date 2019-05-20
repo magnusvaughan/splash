@@ -1,8 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="wordlist-entry">
-    <h2>{{ object.date }}</h2>
-    <p>{{ object.newspaper }}</p>
-    <p>{{ object.words }}</p>
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <h2>{{ object.date }}</h2>
+                <h2>{{ object.newspaper }}</h2>
+                <table class="table is-striped is-fullwidth is-hoverable">
+                    <thead>
+                    <tr>
+                        <th>Word / Phrase</th>
+                        <th><abbr title="Played">Times used</abbr></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for k, v in object.words.items %}
+                            <tr>
+                            <td>{{ k }}</td>
+                            <td>{{ v }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 </div>
 {% endblock content %}

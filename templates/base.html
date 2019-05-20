@@ -8,13 +8,23 @@
 </head>
 
 <body>
-    <header>
-        <h1 class="is-size-1"><a href="{% url 'home' %}">Splash</a></h1>
-    </header>
-    <div>
+    
+        <header>
+            <section class="hero">
+                <div class="hero-body">
+                    <div class="container">
+                        <h1 class="subtitle is-1"><a href="{% url 'home' %}">Splash</a></h1>
+                    <h2 class="subtitle">
+                        What the papers are saying
+                    </h2>
+                    </div>
+                </div>
+            </section>
+        </header>
         {% block content %}
         {% endblock content %}
-    </div>
+
+
 </body>
 
 </html>
