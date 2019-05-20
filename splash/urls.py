@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import NewspaperListView
+from .views import WordlistListView, WordlistDetailView
 
 urlpatterns = [
-    path('', NewspaperListView.as_view(), name='home'),
+    path('wordlist/<int:pk>/', WordlistDetailView.as_view(), name='post_detail'),
+    path('', WordlistListView.as_view(), name='home'),
 ]

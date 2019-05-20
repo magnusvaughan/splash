@@ -1,6 +1,10 @@
-from django.views.generic import ListView
-from .models import Newspaper
+from django.views.generic import ListView, DetailView
+from .models import Wordlist
 
-class NewspaperListView(ListView):
-    model = Newspaper
+class WordlistListView(ListView):
+    model = Wordlist
     template_name = 'home.html'
+
+class WordlistDetailView(DetailView):
+    model = Wordlist
+    template_name = 'wordlist_detail.html'
