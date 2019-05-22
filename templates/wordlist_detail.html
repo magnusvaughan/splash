@@ -14,10 +14,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                        {% for k, v in object.words.items %}
+                        {% for wordtotal in wordtotals %}
                             <tr>
-                            <td>{{ k }}</td>
-                            <td>{{ v }}</td>
+                            <td>{{ wordtotal.phrase }}</td>
+                            <td>{{ wordtotal.count }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

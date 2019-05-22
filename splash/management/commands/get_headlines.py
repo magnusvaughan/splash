@@ -46,117 +46,131 @@ class Command(BaseCommand):
             else:
                 noun_phrase_assoc[phrase] = 1
 
-        noun_phrase_assoc = {key:val for key, val in noun_phrase_assoc.items() if val != 1}
+        print(noun_phrase_assoc)
 
-        from splash.models import Wordlist, Newspaper
-        newspaper = Newspaper.objects.get(id=2)
-        wordlist_record = Wordlist(newspaper=newspaper, words=noun_phrase_assoc)
+        # noun_phrase_assoc = {key:val for key, val in noun_phrase_assoc.items() if val != 1}
+
+        from splash.models import Wordlist, Newspaper, Phrase, WordTotal
+
+        newspaper = Newspaper.objects.get(name="The Mail")
+        wordlist_record = Wordlist(newspaper=newspaper)
         wordlist_record.save()
 
-        # The Guardian
-
-        base_url = 'https://www.theguardian.com/uk'
-
-        page = requests.get(base_url)
-
-        soup = BeautifulSoup(page.text, 'html.parser')
-
-        headline_wrappers = soup.findAll(class_='js-headline-text')
-
-        noun_phrase_list = []
-
-        for headline_wrapper in headline_wrappers:
-            headline_unparsed = headline_wrapper.text
-            headline_parsed = headline_unparsed.replace("\n", "")
-            headline = headline_parsed.strip()
-            print(headline)
-            doc = nlp(str(headline))
-            noun_phrases = [chunk.text for chunk in doc.noun_chunks]
-            noun_phrase_list = noun_phrase_list + noun_phrases
-
-        noun_phrase_assoc = {}
-
-        for phrase in noun_phrase_list:
-            if( phrase in noun_phrase_assoc.keys() ):
-                noun_phrase_assoc[phrase] += 1
+        for key, value in noun_phrase_assoc.items():
+            if(Phrase.objects.filter(phrase=key).count()):
+                phrase = Phrase.objects.get(phrase=key)
+                wordtotal_record = WordTotal(wordlist=wordlist_record,phrase=phrase,count=value)
+                wordtotal_record.save()
             else:
-                noun_phrase_assoc[phrase] = 1
+                phrase_record = Phrase(phrase=key)
+                phrase_record.save()
+                wordtotal_record = WordTotal(wordlist=wordlist_record,phrase=phrase_record,count=value)
+                wordtotal_record.save()
 
-        noun_phrase_assoc = {key:val for key, val in noun_phrase_assoc.items() if val != 1}
+        # # The Guardian
 
-        newspaper = Newspaper.objects.get(id=1)
-        wordlist_record = Wordlist(newspaper=newspaper, words=noun_phrase_assoc)
-        wordlist_record.save()
+        # base_url = 'https://www.theguardian.com/uk'
 
-        #The Telegraph
+        # page = requests.get(base_url)
 
-        base_url = 'https://www.telegraph.co.uk/'
+        # soup = BeautifulSoup(page.text, 'html.parser')
 
-        page = requests.get(base_url)
+        # headline_wrappers = soup.findAll(class_='js-headline-text')
 
-        soup = BeautifulSoup(page.text, 'html.parser')
+        # noun_phrase_list = []
 
-        headline_wrappers = soup.findAll(class_='list-of-entities__item-body-headline')
+        # for headline_wrapper in headline_wrappers:
+        #     headline_unparsed = headline_wrapper.text
+        #     headline_parsed = headline_unparsed.replace("\n", "")
+        #     headline = headline_parsed.strip()
+        #     print(headline)
+        #     doc = nlp(str(headline))
+        #     noun_phrases = [chunk.text for chunk in doc.noun_chunks]
+        #     noun_phrase_list = noun_phrase_list + noun_phrases
 
-        noun_phrase_list = []
+        # noun_phrase_assoc = {}
 
-        for headline_wrapper in headline_wrappers:
-            headline_link = headline_wrapper.find('a')
-            if headline_link is not None:
-                headline_unparsed = headline_link.text
-                if headline_unparsed is not None:
-                    headline_parsed = headline_unparsed.replace("\n", "")
-                    headline = headline_parsed.strip()
-                    print(headline)
-                    doc = nlp(str(headline))
-                    noun_phrases = [chunk.text for chunk in doc.noun_chunks]
-                    noun_phrase_list = noun_phrase_list + noun_phrases
+        # for phrase in noun_phrase_list:
+        #     if( phrase in noun_phrase_assoc.keys() ):
+        #         noun_phrase_assoc[phrase] += 1
+        #     else:
+        #         noun_phrase_assoc[phrase] = 1
 
-        noun_phrase_assoc = {}
+        # noun_phrase_assoc = {key:val for key, val in noun_phrase_assoc.items() if val != 1}
 
-        for phrase in noun_phrase_list:
-            if( phrase in noun_phrase_assoc.keys() ):
-                noun_phrase_assoc[phrase] += 1
-            else:
-                noun_phrase_assoc[phrase] = 1
+        # newspaper = Newspaper.objects.get(name="The Guardian")
+        # wordlist_record = Wordlist(newspaper=newspaper, words=noun_phrase_assoc)
+        # wordlist_record.save()
 
-        noun_phrase_assoc = {key:val for key, val in noun_phrase_assoc.items() if val != 1}
+        # #The Telegraph
 
-        newspaper = Newspaper.objects.get(id=4)
-        wordlist_record = Wordlist(newspaper=newspaper, words=noun_phrase_assoc)
-        wordlist_record.save()
+        # base_url = 'https://www.telegraph.co.uk/'
 
-        # The Express
+        # page = requests.get(base_url)
 
-        base_url = 'https://www.express.co.uk/'
+        # soup = BeautifulSoup(page.text, 'html.parser')
 
-        page = requests.get(base_url)
+        # headline_wrappers = soup.findAll(class_='list-of-entities__item-body-headline')
 
-        soup = BeautifulSoup(page.text, 'html.parser')
+        # noun_phrase_list = []
 
-        headline_wrappers = soup.findAll(['h2', 'h4'])
+        # for headline_wrapper in headline_wrappers:
+        #     headline_link = headline_wrapper.find('a')
+        #     if headline_link is not None:
+        #         headline_unparsed = headline_link.text
+        #         if headline_unparsed is not None:
+        #             headline_parsed = headline_unparsed.replace("\n", "")
+        #             headline = headline_parsed.strip()
+        #             print(headline)
+        #             doc = nlp(str(headline))
+        #             noun_phrases = [chunk.text for chunk in doc.noun_chunks]
+        #             noun_phrase_list = noun_phrase_list + noun_phrases
 
-        noun_phrase_list = []
+        # noun_phrase_assoc = {}
 
-        for headline_wrapper in headline_wrappers:
-            headline_unparsed = headline_wrapper.text
-            headline_parsed = headline_unparsed.replace("\n", "")
-            headline = headline_parsed.strip()
-            print(headline)
-            doc = nlp(str(headline))
-            noun_phrases = [chunk.text for chunk in doc.noun_chunks]
-            noun_phrase_list = noun_phrase_list + noun_phrases
+        # for phrase in noun_phrase_list:
+        #     if( phrase in noun_phrase_assoc.keys() ):
+        #         noun_phrase_assoc[phrase] += 1
+        #     else:
+        #         noun_phrase_assoc[phrase] = 1
 
-        noun_phrase_assoc = {}
+        # noun_phrase_assoc = {key:val for key, val in noun_phrase_assoc.items() if val != 1}
 
-        for phrase in noun_phrase_list:
-            if( phrase in noun_phrase_assoc.keys() ):
-                noun_phrase_assoc[phrase] += 1
-            else:
-                noun_phrase_assoc[phrase] = 1
+        # newspaper = Newspaper.objects.get(name="The Telegraph")
+        # wordlist_record = Wordlist(newspaper=newspaper, words=noun_phrase_assoc)
+        # wordlist_record.save()
 
-        noun_phrase_assoc = {key:val for key, val in noun_phrase_assoc.items() if val != 1}
+        # # The Express
 
-        newspaper = Newspaper.objects.get(id=3)
-        wordlist_record = Wordlist(newspaper=newspaper, words=noun_phrase_assoc)
-        wordlist_record.save()
+        # base_url = 'https://www.express.co.uk/'
+
+        # page = requests.get(base_url)
+
+        # soup = BeautifulSoup(page.text, 'html.parser')
+
+        # headline_wrappers = soup.findAll(['h2', 'h4'])
+
+        # noun_phrase_list = []
+
+        # for headline_wrapper in headline_wrappers:
+        #     headline_unparsed = headline_wrapper.text
+        #     headline_parsed = headline_unparsed.replace("\n", "")
+        #     headline = headline_parsed.strip()
+        #     print(headline)
+        #     doc = nlp(str(headline))
+        #     noun_phrases = [chunk.text for chunk in doc.noun_chunks]
+        #     noun_phrase_list = noun_phrase_list + noun_phrases
+
+        # noun_phrase_assoc = {}
+
+        # for phrase in noun_phrase_list:
+        #     if( phrase in noun_phrase_assoc.keys() ):
+        #         noun_phrase_assoc[phrase] += 1
+        #     else:
+        #         noun_phrase_assoc[phrase] = 1
+
+        # noun_phrase_assoc = {key:val for key, val in noun_phrase_assoc.items() if val != 1}
+
+        # newspaper = Newspaper.objects.get(name="The Express")
+        # wordlist_record = Wordlist(newspaper=newspaper, words=noun_phrase_assoc)
+        # wordlist_record.save()

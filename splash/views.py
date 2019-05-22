@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from .models import Wordlist
+from .models import Wordlist, WordTotal
 
 class WordlistListView(ListView):
     model = Wordlist
@@ -8,3 +8,11 @@ class WordlistListView(ListView):
 class WordlistDetailView(DetailView):
     model = Wordlist
     template_name = 'wordlist_detail.html'
+    context_object_name = 'wordlistinfo'
+
+    def get_context_data(self, **kwargs):
+        context = super(WordlistDetailView, self).get_context_data(**kwargs)
+        wordlist = Wordlist.objects.get(id=self.kwargs['pk'])
+        wordtotals = wordlist.wordtotal_set.all().order_by('-count', 'phrase')
+        context.update({'wordtotals': wordtotals})
+        return context

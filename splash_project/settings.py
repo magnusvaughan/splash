@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.environ.get('SPLASH_DB_NAME'),
         'USER': os.environ.get('SPLASH_DB_USER'),
-        'NAME': os.environ.get('SPLASH_DB_PASSWORD'),
+        'PASS': os.environ.get('SPLASH_DB_PASSWORD'),
         'HOST': 'localhost',
         'PORT': '5432'
     }
