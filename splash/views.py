@@ -5,6 +5,12 @@ class WordlistListView(ListView):
     model = Wordlist
     template_name = 'home.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(WordlistListView, self).get_context_data(**kwargs)
+        wordlists = Wordlist.objects.all().order_by('newspaper')
+        context.update({'wordlists': wordlists})
+        return context
+
 class WordlistDetailView(DetailView):
     model = Wordlist
     template_name = 'wordlist_detail.html'

@@ -4,12 +4,22 @@
         <div class="hero-body">
             <div class="container">
             <div class="columns is-multiline">
-            {% for wordlist in object_list %}
-                <div class="column is-one-quarter has-text-left">
-                    <a href="{% url 'wordlist_detail' wordlist.pk %}">{{ wordlist.date }}</a>
-                    <span>{{ wordlist.newspaper }}</span>
-                </div>
-            {% endfor %}
+                <table class="table is-striped is-fullwidth is-hoverable">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th><abbr title="Played">Newspaper</abbr></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for wordlist in wordlists %}
+                            <tr>
+                            <td><a href="{% url 'wordlist_detail' wordlist.pk %}">{{ wordlist.date }}</a></td>
+                            <td>{{ wordlist.newspaper }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
             </div>
         </div>
