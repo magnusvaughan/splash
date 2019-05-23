@@ -46,10 +46,6 @@ class Command(BaseCommand):
             else:
                 noun_phrase_assoc[phrase] = 1
 
-        print(noun_phrase_assoc)
-
-        # noun_phrase_assoc = {key:val for key, val in noun_phrase_assoc.items() if val != 1}
-
         from splash.models import Wordlist, Newspaper, Phrase, WordTotal
 
         newspaper = Newspaper.objects.get(name="The Mail")
@@ -67,7 +63,7 @@ class Command(BaseCommand):
                 wordtotal_record = WordTotal(wordlist=wordlist_record,phrase=phrase_record,count=value)
                 wordtotal_record.save()
 
-        # # The Guardian
+        # The Guardian
 
         base_url = 'https://www.theguardian.com/uk'
 
@@ -75,7 +71,7 @@ class Command(BaseCommand):
 
         soup = BeautifulSoup(page.text, 'html.parser')
 
-        headline_wrappers = soup.findAll(class_='js-headline-text')
+        headline_wrappers = soup.findAll("a", {"class": "js-headline-text"})
 
         noun_phrase_list = []
 
@@ -111,7 +107,7 @@ class Command(BaseCommand):
                 wordtotal_record = WordTotal(wordlist=wordlist_record,phrase=phrase_record,count=value)
                 wordtotal_record.save()
 
-        # #The Telegraph
+        #The Telegraph
 
         base_url = 'https://www.telegraph.co.uk/'
 
@@ -121,7 +117,7 @@ class Command(BaseCommand):
 
         headline_wrappers = soup.findAll(class_='list-of-entities__item-body-headline')
 
-        # noun_phrase_list = []
+        noun_phrase_list = []
 
         for headline_wrapper in headline_wrappers:
             headline_link = headline_wrapper.find('a')
@@ -158,7 +154,7 @@ class Command(BaseCommand):
                 wordtotal_record = WordTotal(wordlist=wordlist_record,phrase=phrase_record,count=value)
                 wordtotal_record.save()
 
-        # # The Express
+        # The Express
 
         base_url = 'https://www.express.co.uk/'
 
@@ -166,7 +162,7 @@ class Command(BaseCommand):
 
         soup = BeautifulSoup(page.text, 'html.parser')
 
-        headline_wrappers = soup.findAll(['h2', 'h4'])
+        headline_wrappers = soup.findAll("h4", {"class": None})
 
         noun_phrase_list = []
 

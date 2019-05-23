@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container">
+            <div class="columns is-multiline">
+                <table class="table is-striped is-fullwidth is-hoverable">
+                    <thead>
+                    <tr>
+                        <th>Phrase</th>
+                        {% comment %} <th><abbr title="Played">Total times used</abbr></th> {% endcomment %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for phrase in phrases %}
+                            <tr>
+                            <td><a href="{% url 'phrase_detail' phrase.pk %}">{{ phrase.phrase }}</a></td>
+                            {% comment %} <td>{{ wordlist.newspaper }}</td> {% endcomment %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
