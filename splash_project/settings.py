@@ -81,6 +81,7 @@ WSGI_APPLICATION = 'splash_project.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 import psycopg2
+import dj_database_url
 import dotenv
 
 dotenv_file = os.path.join(BASE_DIR, ".env")
@@ -97,11 +98,8 @@ if os.path.isfile(dotenv_file):
         }
     }
 else:
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        }
-    }
+    DATABASES = {}
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 
 

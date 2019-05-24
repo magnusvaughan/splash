@@ -15,6 +15,7 @@ spacy = "*"
 bs4 = "*"
 pprint = "*"
 python-dotenv = "*"
+dj-database-url = "*"
 
 [requires]
 python_version = "3.7"
