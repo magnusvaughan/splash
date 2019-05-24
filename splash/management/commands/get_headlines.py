@@ -16,6 +16,8 @@ class Command(BaseCommand):
 
         base_url = 'https://www.dailymail.co.uk/home/index.html'
 
+        import en_core_web_sm
+
         # Load English tokenizer, tagger, parser, NER and word vectors
         nlp = spacy.load("en_core_web_sm")
 
