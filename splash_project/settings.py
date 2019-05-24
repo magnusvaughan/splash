@@ -96,6 +96,12 @@ if os.path.isfile(dotenv_file):
         'PORT': '5432'
         }
     }
+else:
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        }
+    }
 
 
 
