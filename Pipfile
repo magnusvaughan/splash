@@ -9,6 +9,12 @@ autopep8 = "*"
 [packages]
 django = "==2.2.0"
 gunicorn = "==19.9.0"
+psycopg2 = "*"
+requests = "*"
+spacy = "*"
+bs4 = "*"
+pprint = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"
