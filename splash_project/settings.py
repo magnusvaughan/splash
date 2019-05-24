@@ -81,8 +81,12 @@ WSGI_APPLICATION = 'splash_project.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 import psycopg2
+import dotenv
 
-DATABASES = {
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.environ.get('SPLASH_DB_NAME'),
@@ -90,8 +94,10 @@ DATABASES = {
         'PASS': os.environ.get('SPLASH_DB_PASSWORD'),
         'HOST': 'localhost',
         'PORT': '5432'
+        }
     }
-}
+
+
 
 
 # Password validation
