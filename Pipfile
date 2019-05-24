@@ -16,6 +16,7 @@ bs4 = "*"
 pprint = "*"
 python-dotenv = "*"
 dj-database-url = "*"
+whitenoise = "==3.3.1"
 
 [requires]
 python_version = "3.7"
