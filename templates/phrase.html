@@ -7,12 +7,14 @@
                 <thead>
                 <tr>
                     <th>Phrase</th>
+                    <th>Count</th>
                 </tr>
                 </thead>
                 <tbody>
-                    {% for phrase in phrases %}
+                    {% for phrase in wordtotals %}
                         <tr>
-                        <td><a href="{% url 'phrase_detail' phrase.pk %}">{{ phrase.phrase }}</a></td>
+                        <td>{{ phrase.0 }}</td>
+                        <td>{{ phrase.1 }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -20,5 +22,3 @@
         </div>
     </div>
 </div>
-
-{% endblock content %}
