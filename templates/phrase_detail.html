@@ -1,28 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="wordlist-entry">
-    <section class="hero">
-        <div class="hero-body">
-            <div class="container">
-                <h2>{{ phrase.phrase }}</h2>
-                <table class="table is-striped is-fullwidth is-hoverable">
-                    <thead>
-                    <tr>
-                        <th>Word / Phrase</th>
-                        <th><abbr title="Played">Times used</abbr></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {% for phrase, wordtotal in wordtotals.items %}
-                            <tr>
-                            <td>{{ phrase }}</td>
-                            <td>{{ wordtotal}}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th>Word / Phrase</th>
+                    <th><abbr title="Played">Times used</abbr></th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for phrase, wordtotal in wordtotals.items %}
+                        <tr>
+                        <td>{{ phrase }}</td>
+                        <td>{{ wordtotal}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-    </section>
+    </div>
 </div>
+
 {% endblock content %}

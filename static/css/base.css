@@ -1,3 +1,13 @@
-h1.subtitle a {
-    color: grey;
+a, a:visited, a:focus, a:active {
+    color: #6c757d;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #212529;
+    text-decoration: none;
+}
+
+h1 {
+    color: #212529;
 }
