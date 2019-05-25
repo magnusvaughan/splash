@@ -46,6 +46,7 @@ class PhraseListView(ListView):
         import operator
 
         sorted_wordtotals = sorted(wordtotals_object.items(), key=operator.itemgetter(1), reverse=True)
+        # todo - Only return the first 100 records / figure out pagination
 
         context.update(
             {'wordtotals': sorted_wordtotals
