@@ -14,7 +14,7 @@
                 <tbody>
                     {% for wordlist in wordlists %}
                         <tr>
-                        <td><a href="{% url 'wordlist_detail' wordlist.pk %}">{{ wordlist.date }}</a></td>
+                        <td><a href="{% url 'wordlist_detail' wordlist.pk %}">{{ wordlist.date|date:"dS M Y" }}</a></td>
                         <td>{{ wordlist.newspaper }}</td>
                         </tr>
                     {% endfor %}
