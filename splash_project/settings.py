@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'splash.apps.SplashConfig',
+     'analytical',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +151,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-137553389-2'

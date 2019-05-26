@@ -1,14 +1,18 @@
 {% load static %}
+{% load analytical %}
 <html>
     <head>
+        {% analytical_head_top %}
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Splash - What the papers are saying</title>
         <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
         {% comment %} <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet"> {% endcomment %}
         <link href="{% static 'css/base.css' %}" rel="stylesheet">
+        {% analytical_head_bottom %}
     </head>
     <body>
+        {% analytical_body_top %}
         <div class="container">
             <div class="px-0 py-3 pt-md-5 pb-md-4 mx-auto text-left">
                 <div class="nav-wrapper d-block text-right">
@@ -24,5 +28,6 @@
             {% block content %}
             {% endblock content %}
         </div>
+        {% analytical_body_bottom %}
     </body>
 </html>
