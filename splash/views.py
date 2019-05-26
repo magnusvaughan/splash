@@ -1,6 +1,11 @@
 from django.views.generic import ListView, DetailView
 from .models import Wordlist, WordTotal, Phrase
 
+phrases_to_ignore = [
+    "he", "she", "i", "it", "they", "Comment", "you", "who", "her", "we", "What", "me",
+    "us", "I", "him", "what", "We", "It", "You", "'s"
+]
+
 class WordlistListView(ListView):
     model = Wordlist
     template_name = 'home.html'
@@ -20,6 +25,8 @@ class WordlistDetailView(DetailView):
         context = super(WordlistDetailView, self).get_context_data(**kwargs)
         wordlist = Wordlist.objects.get(id=self.kwargs['pk'])
         wordtotals = wordlist.wordtotal_set.all().order_by('-count', 'phrase')
+        for phrase_to_ignore in phrases_to_ignore:
+            wordtotals = wordtotals.exclude(phrase__phrase=phrase_to_ignore)
         context.update({'wordtotals': wordtotals})
         return context
 
@@ -36,12 +43,13 @@ class PhraseListView(ListView):
         wordtotals_object = {}
 
         for phrase in phrases:
-            wordtotals = phrase.wordtotal_set.all()
-            count = 0
+            if(phrase.phrase not in phrases_to_ignore):
+                wordtotals = phrase.wordtotal_set.all()
+                count = 0
 
-            for wordtotal in wordtotals:
-                count = count + wordtotal.count
-                wordtotals_object[phrase.phrase] = count
+                for wordtotal in wordtotals:
+                    count = count + wordtotal.count
+                    wordtotals_object[phrase.phrase] = count
 
         import operator
 
