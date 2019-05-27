@@ -1,4 +1,5 @@
 from django.views.generic import ListView, DetailView
+from django.db.models import Sum
 from .models import Wordlist, WordTotal, Phrase, Newspaper
 from django.shortcuts import get_object_or_404
 
@@ -55,17 +56,16 @@ class PhraseListView(ListView):
         for phrase in phrases:
             if(phrase.phrase not in phrases_to_ignore):
                 wordtotals = phrase.wordtotal_set.all()
-                count = 0
+                wordtotals_total = wordtotals.aggregate(Sum('count'))
 
                 for wordtotal in wordtotals:
                     if(self.newspaper != None):
                         if(wordtotal.wordlist.newspaper.name == self.newspaper.name):
-                            count = count + wordtotal.count
-                            wordtotals_object[phrase.phrase] = count
+                            print(wordtotals_total['count__sum'])
+                            wordtotals_object[phrase.phrase] = wordtotals_total['count__sum']
                     else:
-                        count = count + wordtotal.count
-                        wordtotals_object[phrase.phrase] = count 
-
+                        wordtotals_object[phrase.phrase] = wordtotals_total['count__sum']
+                        
         import operator
 
         sorted_wordtotals = sorted(wordtotals_object.items(), key=operator.itemgetter(0))
