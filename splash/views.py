@@ -45,6 +45,7 @@ class PhraseListView(ListView):
             self.newspaper = None
         context = super(PhraseListView, self).get_context_data(**kwargs)
         phrases = Phrase.objects.all().annotate(Count('wordtotal__count')).filter(wordtotal__count__gte=2)
+        phrases = phrases.exclude(phrase__in=phrases_to_ignore)
 
         wordtotals_object = {}
 
@@ -54,20 +55,21 @@ class PhraseListView(ListView):
             active_newspaper = "All newspapers"
 
         for phrase in phrases:
-            if(phrase.phrase not in phrases_to_ignore):
-                wordtotals = phrase.wordtotal_set.all()
-                wordtotals_total = wordtotals.aggregate(Sum('count'))
-                count = 0
+            # if(phrase.phrase not in phrases_to_ignore):
+            wordtotals = phrase.wordtotal_set.all()
+            wordtotals_total = wordtotals.aggregate(Sum('count'))
 
-                if(self.newspaper == None):
-                    wordtotals_object[phrase.phrase] = wordtotals_total['count__sum']
-                else:
-                    for wordtotal in wordtotals:
-                        if(self.newspaper != None):
-                            if(wordtotal.wordlist.newspaper.name == self.newspaper.name):
-                                count = count + wordtotal.count
-   
-                    wordtotals_object[phrase.phrase] = count
+            count = 0
+
+            if(self.newspaper == None):
+                wordtotals_object[phrase.phrase] = wordtotals_total['count__sum']
+            else:
+                for wordtotal in wordtotals:
+                    if(self.newspaper != None):
+                        if(wordtotal.wordlist.newspaper.name == self.newspaper.name):
+                            count+=wordtotal.count
+            if(count > 0):
+                wordtotals_object[phrase.phrase] = count
 
         import operator
 
