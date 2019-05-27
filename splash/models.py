@@ -26,4 +26,4 @@ class WordTotal(models.Model):
     count = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
-        return str(self.phrase)
+        return str(self.count)
