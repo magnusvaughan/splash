@@ -57,11 +57,12 @@ class PhraseListView(ListView):
             if(phrase.phrase not in phrases_to_ignore):
                 wordtotals = phrase.wordtotal_set.all()
                 wordtotals_total = wordtotals.aggregate(Sum('count'))
+                if(wordtotals_total['count__sum'] < 3):
+                    continue
 
                 for wordtotal in wordtotals:
                     if(self.newspaper != None):
                         if(wordtotal.wordlist.newspaper.name == self.newspaper.name):
-                            print(wordtotals_total['count__sum'])
                             wordtotals_object[phrase.phrase] = wordtotals_total['count__sum']
                     else:
                         wordtotals_object[phrase.phrase] = wordtotals_total['count__sum']
@@ -74,7 +75,8 @@ class PhraseListView(ListView):
 
         context.update(
             {'wordtotals': sorted_wordtotals_truncated,
-            'active_newspaper': active_newspaper
+            'active_newspaper': active_newspaper,
+            'wordtotals_total': wordtotals_total
         })
                   
         return context
