@@ -6,4 +6,5 @@ urlpatterns = [
     path('', WordlistListView.as_view(), name='home'),
     path('phrase/<int:pk>/', PhraseDetailView.as_view(), name='phrase_detail'),
     path('phrase', PhraseListView.as_view(), name='phrase'),
+    path('phrase/<newspaper>', PhraseListView.as_view(), name='phrase'),
 ]

@@ -1,5 +1,6 @@
 from django.views.generic import ListView, DetailView
-from .models import Wordlist, WordTotal, Phrase
+from .models import Wordlist, WordTotal, Phrase, Newspaper
+from django.shortcuts import get_object_or_404
 
 phrases_to_ignore = [
     "he", "she", "i", "it", "they", "Comment", "you", "who", "her", "we", "What", "me",
@@ -37,10 +38,19 @@ class PhraseListView(ListView):
     ordering = ['phrase']
 
     def get_context_data(self, **kwargs):
+        if('newspaper' in self.kwargs):
+            self.newspaper = get_object_or_404(Newspaper, name=self.kwargs['newspaper'].replace('_', ' ').title())
+        else:
+            self.newspaper = None
         context = super(PhraseListView, self).get_context_data(**kwargs)
         phrases = Phrase.objects.all()
 
         wordtotals_object = {}
+
+        if(self.newspaper != None):
+            active_newspaper = self.newspaper.name
+        else:
+            active_newspaper = "All newspapers"
 
         for phrase in phrases:
             if(phrase.phrase not in phrases_to_ignore):
@@ -48,8 +58,13 @@ class PhraseListView(ListView):
                 count = 0
 
                 for wordtotal in wordtotals:
-                    count = count + wordtotal.count
-                    wordtotals_object[phrase.phrase] = count
+                    if(self.newspaper != None):
+                        if(wordtotal.wordlist.newspaper.name == self.newspaper.name):
+                            count = count + wordtotal.count
+                            wordtotals_object[phrase.phrase] = count
+                    else:
+                        count = count + wordtotal.count
+                        wordtotals_object[phrase.phrase] = count 
 
         import operator
 
@@ -58,7 +73,8 @@ class PhraseListView(ListView):
         # sorted_wordtotals_truncated = sorted_wordtotals[0:200]
 
         context.update(
-            {'wordtotals': sorted_wordtotals
+            {'wordtotals': sorted_wordtotals,
+            'active_newspaper': active_newspaper
         })
                   
         return context
