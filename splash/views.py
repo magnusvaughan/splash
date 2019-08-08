@@ -44,7 +44,7 @@ class PhraseListView(ListView):
         else:
             self.newspaper = None
         context = super(PhraseListView, self).get_context_data(**kwargs)
-        phrases = Phrase.objects.all().annotate(Count('wordtotal__count')).filter(wordtotal__count__gte=15)
+        phrases = Phrase.objects.all().annotate(Count('wordtotal__count')).filter(wordtotal__count__gte=2)
         phrases = phrases.exclude(phrase__in=phrases_to_ignore)
 
         wordtotals_object = {}
@@ -75,7 +75,7 @@ class PhraseListView(ListView):
 
         sorted_wordtotals = sorted(wordtotals_object.items(), key=operator.itemgetter(0))
         sorted_wordtotals = sorted(sorted_wordtotals, key=operator.itemgetter(1), reverse=True)
-        # sorted_wordtotals_truncated = sorted_wordtotals[0:200]
+        sorted_wordtotals_truncated = sorted_wordtotals[0:200]
 
         context.update(
             {'wordtotals': sorted_wordtotals,
