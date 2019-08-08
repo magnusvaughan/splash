@@ -78,7 +78,7 @@ class PhraseListView(ListView):
         sorted_wordtotals_truncated = sorted_wordtotals[0:200]
 
         context.update(
-            {'wordtotals': sorted_wordtotals,
+            {'wordtotals': sorted_wordtotals_truncated,
             'active_newspaper': active_newspaper,
             'wordtotals_total': wordtotals_total
         })
