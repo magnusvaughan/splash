@@ -44,7 +44,7 @@ class PhraseListView(ListView):
         else:
             self.newspaper = None
         context = super(PhraseListView, self).get_context_data(**kwargs)
-        phrases = Phrase.objects.all().annotate(Count('wordtotal__count')).filter(wordtotal__count__gte=2)
+        phrases = Phrase.objects.all().annotate(Count('wordtotal__count')).filter(wordtotal__count__gte=30)
         phrases = phrases.exclude(phrase__in=phrases_to_ignore)
 
         wordtotals_object = {}
