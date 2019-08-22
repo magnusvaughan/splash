@@ -87,8 +87,8 @@ import dj_database_url
 import dotenv
 
 # dotenv_file = os.path.join(BASE_DIR, ".env")
-# if os.path.isfile(dotenv_file):
-    # dotenv.load_dotenv(dotenv_file)
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 DATABASES = {
 'default': {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
