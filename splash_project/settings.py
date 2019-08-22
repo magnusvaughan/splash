@@ -89,19 +89,19 @@ import dotenv
 # dotenv_file = os.path.join(BASE_DIR, ".env")
 # if os.path.isfile(dotenv_file):
     # dotenv.load_dotenv(dotenv_file)
-DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': os.environ.get('SPLASH_DB_NAME'),
-    'USER': os.environ.get('SPLASH_DB_USER'),
-    'PASS': os.environ.get('SPLASH_DB_PASSWORD'),
-    'HOST': 'localhost',
-    'PORT': '5432'
-    }
-}
+# DATABASES = {
+# 'default': {
+#     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#     'NAME': os.environ.get('SPLASH_DB_NAME'),
+#     'USER': os.environ.get('SPLASH_DB_USER'),
+#     'PASS': os.environ.get('SPLASH_DB_PASSWORD'),
+#     'HOST': 'localhost',
+#     'PORT': '5432'
+#     }
+# }
 # else:
-#     DATABASES = {}
-#     DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 
 
