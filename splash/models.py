@@ -22,7 +22,7 @@ class Phrase(models.Model):
 
 class WordTotal(models.Model):
     wordlist =  models.ForeignKey('Wordlist',on_delete=models.CASCADE,)
-    phrase = models.ForeignKey('Phrase',on_delete=models.CASCADE,)
+    phrase = models.ForeignKey('Phrase', related_name="wordtotal", on_delete=models.CASCADE,)
     count = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):

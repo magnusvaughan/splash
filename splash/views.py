@@ -33,6 +33,7 @@ class WordlistDetailView(DetailView):
         return context
 
 class PhraseListView(ListView):
+
     model = Phrase
     template_name = 'phrase.html'
     context_object_name = 'wordtotals'
@@ -44,7 +45,7 @@ class PhraseListView(ListView):
         else:
             self.newspaper = None
         context = super(PhraseListView, self).get_context_data(**kwargs)
-        phrases = Phrase.objects.all().annotate(Count('wordtotal__count')).filter(wordtotal__count__gte=2)
+        phrases = Phrase.objects.all().filter(wordtotal__count__gte=2).annotate(Count('wordtotal__count')).prefetch_related('wordtotal').all()
         phrases = phrases.exclude(phrase__in=phrases_to_ignore)
 
         wordtotals_object = {}
@@ -55,8 +56,9 @@ class PhraseListView(ListView):
             active_newspaper = "All newspapers"
 
         for phrase in phrases:
+
             # if(phrase.phrase not in phrases_to_ignore):
-            wordtotals = phrase.wordtotal_set.all()
+            wordtotals = phrase.wordtotal
             wordtotals_total = wordtotals.aggregate(Sum('count'))
 
             count = 0
@@ -64,7 +66,7 @@ class PhraseListView(ListView):
             if(self.newspaper == None):
                 wordtotals_object[phrase.phrase] = wordtotals_total['count__sum']
             else:
-                for wordtotal in wordtotals:
+                for wordtotal in wordtotals.all():
                     if(self.newspaper != None):
                         if(wordtotal.wordlist.newspaper.name == self.newspaper.name):
                             count+=wordtotal.count
