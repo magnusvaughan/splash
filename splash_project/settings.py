@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'splash.apps.SplashConfig',
-     'analytical',
+    'cachalot',
+    'analytical',
 ]
 
 MIDDLEWARE = [
