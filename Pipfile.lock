@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "dff7acb45574d4059d7475ca3084061808385c522de604cd123a75b31e23e171"
+            "sha256": "20f87bd1c4ad07048a190733cff9e2fbad07381311870cab195b15a1e66ad9ff"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -101,11 +101,11 @@
         },
         "django": {
             "hashes": [
-                "sha256:7c3543e4fb070d14e10926189a7fcf42ba919263b7473dceaefce34d54e8a119",
-                "sha256:a2814bffd1f007805b19194eb0b9a331933b82bd5da1c3ba3d7b7ba16e06dc4b"
+                "sha256:5052def4ff0a84bdf669827fdbd7b7cc1ac058f10232be6b21f37c6824f578da",
+                "sha256:bb72b5f8b53f8156280eaea520b548ac128a53f80cebc856c5e0fb555d44d529"
             ],
             "index": "pypi",
-            "version": "==2.2"
+            "version": "==2.1.9"
         },
         "django-analytical": {
             "hashes": [
@@ -115,6 +115,14 @@
             ],
             "index": "pypi",
             "version": "==2.5.0"
+        },
+        "django-cachalot": {
+            "hashes": [
+                "sha256:2da574b7e88890243ad048883fd95789b9d7be895642ff6fb531c71672f3994b",
+                "sha256:3c60ba84931efe532609cb4e44e5c7e4f33453b2f2a782aef39953cf2c74a336"
+            ],
+            "index": "pypi",
+            "version": "==2.1.0"
         },
         "en-core-web-sm": {
             "file": "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.1.0/en_core_web_sm-2.1.0.tar.gz"
@@ -277,13 +285,6 @@
             ],
             "index": "pypi",
             "version": "==2.1.8"
-        },
-        "sqlparse": {
-            "hashes": [
-                "sha256:40afe6b8d4b1117e7dff5504d7a8ce07d9a1b15aeeade8a2d10f130a834f8177",
-                "sha256:7c3dca29c022744e95b547e867cee89f4fce4373f3549ccd8797d8eb52cdb873"
-            ],
-            "version": "==0.3.0"
         },
         "srsly": {
             "hashes": [
