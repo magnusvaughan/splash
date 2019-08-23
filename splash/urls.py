@@ -1,4 +1,5 @@
-from django.urls import path
+from django.conf import settings
+from django.urls import include, path
 from .views import WordlistListView, WordlistDetailView, PhraseListView, PhraseDetailView
 
 urlpatterns = [
@@ -8,3 +9,14 @@ urlpatterns = [
     path('', PhraseListView.as_view(), name='phrase'),
     path('phrase/<newspaper>', PhraseListView.as_view(), name='phrase'),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+
+        # For django versions before 2.0:
+        # url(r'^__debug__/', include(debug_toolbar.urls)),
+
+    ] + urlpatterns
+
