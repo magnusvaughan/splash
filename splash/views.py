@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Q
 from .models import Wordlist, WordTotal, Phrase, Newspaper
 from django.shortcuts import get_object_or_404
 
@@ -42,52 +42,23 @@ class PhraseListView(ListView):
     def get_context_data(self, **kwargs):
         if('newspaper' in self.kwargs):
             self.newspaper = get_object_or_404(Newspaper, name=self.kwargs['newspaper'].replace('_', ' ').title())
+            print(self.newspaper)
         else:
             self.newspaper = None
         context = super(PhraseListView, self).get_context_data(**kwargs)
-        phrases = Phrase.objects.all().annotate(count=Sum('wordtotal__count'))
-        phrases = phrases.exclude(phrase__in=phrases_to_ignore).order_by('-count')
-
-        # wordtotals_object = {}
-
+        phrases = Phrase.objects.all()
         if(self.newspaper != None):
             active_newspaper = self.newspaper.name
+            phrases = phrases.filter(wordtotal__wordlist__newspaper__name=self.newspaper)
         else:
             active_newspaper = "All newspapers"
-
-        # for phrase in phrases:
-
-        #     print(phrase)
-
-            # if(phrase.phrase not in phrases_to_ignore):
-            # wordtotals = phrase.wordtotal
-            # wordtotals_total = wordtotals.aggregate(Sum('count'))
-            # print(wordtotals_total)
-
-            # count = 0
-
-            # if(self.newspaper == None):
-            #     wordtotals_object[phrase.phrase] = wordtotals_total['count__sum']
-            # else:
-            #     for wordtotal in wordtotals:
-            #         if(self.newspaper != None):
-            #             if(wordtotal.wordlist.newspaper.name == self.newspaper.name):
-            #                 count+=wordtotal.count
-            # if(count > 0):
-            #     wordtotals_object[phrase.phrase] = count
-
-        # import operator
-
-        # sorted_wordtotals = sorted(wordtotals_object.items(), key=operator.itemgetter(0))
-        # sorted_wordtotals = sorted(sorted_wordtotals, key=operator.itemgetter(1), reverse=True)
-        # sorted_wordtotals_truncated = sorted_wordtotals[0:200]
+        phrases = phrases.annotate(count=Sum('wordtotal__count'))
+        phrases = phrases.exclude(phrase__in=phrases_to_ignore).order_by('-count')
         truncated_phrases = phrases[0:3000]
 
-        context.update(
-            {
+        context.update({
             'active_newspaper': active_newspaper,
             'phrases': truncated_phrases
-            # 'wordtotals_total': wordtotals_total
         })
                   
         return context
