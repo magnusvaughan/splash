@@ -12,10 +12,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                    {% for phrase in wordtotals %}
+                    {% for phrase in phrases %}
                         <tr>
-                        <td>{{ phrase.0 }}</td>
-                        <td>{{ phrase.1 }}</td>
+                        <td>{{ phrase }}</td>
+                        <td>{{ phrase.count }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
