@@ -2,8 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.db.models import Sum, Count, Q
 from .models import Wordlist, WordTotal, Phrase, Newspaper
 from django.shortcuts import get_object_or_404
-from .models import Newspaper
-from .serializers import NewspaperSerializer, WordlistSerializer
+from .serializers import NewspaperSerializer, WordlistSerializer, PhraselistSerializer
 from rest_framework import generics
 
 phrases_to_ignore = [
@@ -95,3 +94,7 @@ class NewspaperListCreate(generics.ListCreateAPIView):
 class WordlistListCreate(generics.ListCreateAPIView):
     queryset = Wordlist.objects.all()
     serializer_class = WordlistSerializer
+
+class PhraselistListCreate(generics.ListCreateAPIView):
+    queryset = Phrase.objects.all()
+    serializer_class = PhraselistSerializer
