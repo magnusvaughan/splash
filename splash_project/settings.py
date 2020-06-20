@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'splash.apps.SplashConfig',
     'rest_framework',
+    'frontend',
     'analytical',
     'debug_toolbar',
 ]
