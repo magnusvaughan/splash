@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.urls import include, path
+from . import views
 from .views import WordlistListView, WordlistDetailView, PhraseListView, PhraseDetailView
 
 urlpatterns = [
@@ -8,6 +9,7 @@ urlpatterns = [
     path('phrase/<int:pk>/', PhraseDetailView.as_view(), name='phrase_detail'),
     path('', PhraseListView.as_view(), name='phrase'),
     path('phrase/<newspaper>', PhraseListView.as_view(), name='phrase'),
+    path('api/newspaper/', views.NewspaperListCreate.as_view() ),
 ]
 
 if settings.DEBUG:
@@ -19,4 +21,3 @@ if settings.DEBUG:
         # url(r'^__debug__/', include(debug_toolbar.urls)),
 
     ] + urlpatterns
-

@@ -2,6 +2,9 @@ from django.views.generic import ListView, DetailView
 from django.db.models import Sum, Count, Q
 from .models import Wordlist, WordTotal, Phrase, Newspaper
 from django.shortcuts import get_object_or_404
+from .models import Newspaper
+from .serializers import NewspaperSerializer
+from rest_framework import generics
 
 phrases_to_ignore = [
     "he", "she", "i", "it", "they", "Comment", "you", "who", "her", "we", "What", "me",
@@ -82,3 +85,9 @@ class PhraseDetailView(DetailView):
             }
         })
         return context
+
+#DRF API Views
+
+class NewspaperListCreate(generics.ListCreateAPIView):
+    queryset = Newspaper.objects.all()
+    serializer_class = NewspaperSerializer
