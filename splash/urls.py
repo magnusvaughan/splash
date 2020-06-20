@@ -10,6 +10,7 @@ urlpatterns = [
     # path('', PhraseListView.as_view(), name='phrase'),
     path('phrase/<newspaper>', PhraseListView.as_view(), name='phrase'),
     path('api/newspaper/', views.NewspaperListCreate.as_view() ),
+    path('api/wordlist/', views.WordlistListCreate.as_view() ),
 ]
 
 if settings.DEBUG:
