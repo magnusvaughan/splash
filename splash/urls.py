@@ -11,7 +11,8 @@ urlpatterns = [
     path('phrase/<newspaper>', PhraseListView.as_view(), name='phrase'),
     path('api/newspaper/', views.NewspaperListCreate.as_view() ),
     path('api/wordlist/', views.WordlistListCreate.as_view() ),
-    path('api/phraselist/', views.PhraselistListCreate.as_view() ),
+    path('api/phraselist/', views.PhraselistListCreate.as_view({'get': 'list'}) ),
+    path('api/wordtotallist/', views.WordTotalListCreate.as_view({'get': 'list'}) ),
 ]
 
 if settings.DEBUG:

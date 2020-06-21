@@ -1,8 +1,11 @@
 from django.views.generic import ListView, DetailView
+from rest_framework.views import APIView
+from rest_framework import viewsets
+from rest_framework.response import Response
 from django.db.models import Sum, Count, Q
 from .models import Wordlist, WordTotal, Phrase, Newspaper
 from django.shortcuts import get_object_or_404
-from .serializers import NewspaperSerializer, WordlistSerializer, PhraselistSerializer
+from .serializers import NewspaperSerializer, WordlistSerializer, PhraselistSerializer, WordtotalSerializer
 from rest_framework import generics
 
 phrases_to_ignore = [
@@ -95,6 +98,16 @@ class WordlistListCreate(generics.ListCreateAPIView):
     queryset = Wordlist.objects.all()
     serializer_class = WordlistSerializer
 
-class PhraselistListCreate(generics.ListCreateAPIView):
-    queryset = Phrase.objects.all()
+class PhraselistListCreate(viewsets.ModelViewSet):
     serializer_class = PhraselistSerializer
+
+    queryset = Phrase.objects.select_related(
+       'wordtotal__wordlist__newspaper__name'
+    ).all()
+
+class WordTotalListCreate(viewsets.ModelViewSet):
+    serializer_class = WordtotalSerializer
+
+    queryset = WordTotal.objects.select_related(
+       'phrase'
+    ).all()

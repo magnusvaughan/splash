@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Newspaper, Wordlist, Phrase
+from .models import Newspaper, Wordlist, Phrase, WordTotal
 
 class NewspaperSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,4 +14,9 @@ class WordlistSerializer(serializers.ModelSerializer):
 class PhraselistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Phrase
+        fields = "__all__"
+
+class WordtotalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WordTotal
         fields = "__all__"
