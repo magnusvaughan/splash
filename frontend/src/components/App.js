@@ -7,14 +7,14 @@ class App extends Component {
     this.state = {
       data: [],
       loaded: false,
-      placeholder: "Loading"
+      placeholder: "Loading",
     };
   }
 
   componentDidMount() {
     fetch("api/phraselist")
-      .then(response => {
-          console.log(response)
+      .then((response) => {
+        console.log(response);
         if (response.status > 400) {
           return this.setState(() => {
             return { placeholder: "Something went wrong!" };
@@ -22,12 +22,12 @@ class App extends Component {
         }
         return response.json();
       })
-      .then(data => {
-          console.log(data)
+      .then((data) => {
+        console.log(data);
         this.setState(() => {
           return {
             data: data.results,
-            loaded: true
+            loaded: true,
           };
         });
       });
@@ -35,32 +35,24 @@ class App extends Component {
 
   render() {
     return (
-        <div>
-<div class="max-w-sm rounded overflow-hidden shadow-lg">
-  <img class="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains"/ >
-  <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
-    <p class="text-gray-700 text-base">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-    </p>
-  </div>
-  <div class="px-6 py-4">
-    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#photography</span>
-    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#travel</span>
-    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#winter</span>
-  </div>
-</div>
-        <ul>
-            {this.state.data.map(phraselist => {
+      <table className="table-auto">
+        <thead>
+          <tr>
+            <th className="px-4 py-2">Phrase</th>
+            <th className="px-4 py-2">Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.data.map((phraselist) => {
             return (
-                <li key={phraselist.id}>
-                {phraselist.phrase} - 
-                {phraselist.count}
-                </li>
+              <tr className="bg-gray-100" key={phraselist.id}>
+                <td class="border px-4 py-2">{phraselist.phrase}</td>
+                <td class="border px-4 py-2">{phraselist.count}</td>
+              </tr>
             );
-            })}
-        </ul>
-      </div>
+          })}
+        </tbody>
+      </table>
     );
   }
 }
