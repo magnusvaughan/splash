@@ -11,7 +11,8 @@ class WordlistSerializer(serializers.ModelSerializer):
         model = Wordlist
         fields = ('date', 'newspaper')
 
-class PhraselistSerializer(serializers.ModelSerializer):
+class PhraseSerializer(serializers.ModelSerializer):
+    count = serializers.IntegerField()
     class Meta:
         model = Phrase
         fields = "__all__"

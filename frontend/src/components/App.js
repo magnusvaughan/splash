@@ -12,8 +12,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("api/newspaper")
+    fetch("api/phraselist")
       .then(response => {
+          console.log(response)
         if (response.status > 400) {
           return this.setState(() => {
             return { placeholder: "Something went wrong!" };
@@ -22,9 +23,10 @@ class App extends Component {
         return response.json();
       })
       .then(data => {
+          console.log(data)
         this.setState(() => {
           return {
-            data,
+            data: data.results,
             loaded: true
           };
         });
@@ -34,10 +36,11 @@ class App extends Component {
   render() {
     return (
       <ul>
-        {this.state.data.map(newspaper => {
+        {this.state.data.map(phraselist => {
           return (
-            <li key={newspaper.id}>
-              {newspaper.name}
+            <li key={phraselist.id}>
+              {phraselist.phrase} - 
+              {phraselist.count}
             </li>
           );
         })}
