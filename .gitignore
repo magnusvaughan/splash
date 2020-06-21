@@ -124,3 +124,5 @@ dmypy.json
 
 #VS Code 
 .vscode/
+
+frontend/node_modules
