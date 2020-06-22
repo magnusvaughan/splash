@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
+import Nav from './Nav'
 
 class App extends Component {
   constructor(props) {
@@ -35,6 +36,8 @@ class App extends Component {
 
   render() {
     return (
+      <div className="container mx-auto">
+      <Nav/>
       <div class="flex flex-col">
         <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
           <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
@@ -74,6 +77,7 @@ class App extends Component {
             </table>
           </div>
         </div>
+      </div>
       </div>
     );
   }
