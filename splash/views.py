@@ -2,11 +2,12 @@ from django.views.generic import ListView, DetailView
 from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework.response import Response
-from django.db.models import Sum, Count, Q
+from django.db.models import Sum, Count, Q, Prefetch
 from .models import Wordlist, WordTotal, Phrase, Newspaper
 from django.shortcuts import get_object_or_404
-from .serializers import NewspaperSerializer, WordlistSerializer, PhraseSerializer, WordtotalSerializer
+from .serializers import NewspaperSerializer, WordlistSerializer, PhraseSerializer, PhraseListSerializer, WordtotalSerializer
 from rest_framework import generics
+from pprint import pprint
 
 phrases_to_ignore = [
     "he", "she", "i", "it", "they", "Comment", "you", "who", "her", "we", "What", "me",
@@ -99,13 +100,20 @@ class WordlistListCreate(generics.ListCreateAPIView):
     serializer_class = WordlistSerializer
 
 class PhraselistListCreate(generics.ListCreateAPIView):
-    serializer_class = PhraseSerializer
+    serializer_class = PhraseListSerializer
     queryset = Phrase.objects.all()
 
     def get_queryset(self):
         return Phrase.objects.prefetch_related('wordtotal').annotate(
             count=Sum('wordtotal__count')
         ).exclude(phrase__in=phrases_to_ignore).order_by('-count')
+
+class PhraseDetailAPIView(generics.RetrieveAPIView):
+    queryset = Phrase.objects.all()
+    serializer_class = PhraseSerializer
+
+    def get_queryset(self):
+        return Phrase.objects.prefetch_related('wordtotals')
 
 class WordTotalListCreate(generics.ListCreateAPIView):
     serializer_class = WordtotalSerializer

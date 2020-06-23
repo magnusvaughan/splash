@@ -21,8 +21,8 @@ class Phrase(models.Model):
         return str(self.phrase)
 
 class WordTotal(models.Model):
-    wordlist =  models.ForeignKey('Wordlist',on_delete=models.CASCADE,)
-    phrase = models.ForeignKey('Phrase', related_name="wordtotal", on_delete=models.CASCADE,)
+    wordlist =  models.ForeignKey('Wordlist', related_name="wordlists", on_delete=models.CASCADE,)
+    phrase = models.ForeignKey('Phrase', related_name="wordtotals", on_delete=models.CASCADE,)
     count = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):

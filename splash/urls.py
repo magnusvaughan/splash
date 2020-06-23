@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.urls import include, path
 from . import views
-from .views import WordlistListView, WordlistDetailView, PhraseListView, PhraseDetailView
+from .views import WordlistListView, WordlistDetailView, PhraseListView, PhraseDetailView, PhraseDetailAPIView
 
 urlpatterns = [
     path('wordlist/<int:pk>/', WordlistDetailView.as_view(), name='wordlist_detail'),
@@ -13,6 +13,7 @@ urlpatterns = [
     path('api/wordlist/', views.WordlistListCreate.as_view() ),
     path('api/phraselist/', views.PhraselistListCreate.as_view() ),
     path('api/wordtotallist/', views.WordTotalListCreate.as_view() ),
+    path('api/phrases/<int:pk>', PhraseDetailAPIView.as_view()),
 ]
 
 if settings.DEBUG:
