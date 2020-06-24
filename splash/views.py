@@ -104,8 +104,8 @@ class PhraselistListCreate(generics.ListCreateAPIView):
     queryset = Phrase.objects.all()
 
     def get_queryset(self):
-        return Phrase.objects.prefetch_related('wordtotal').annotate(
-            count=Sum('wordtotal__count')
+        return Phrase.objects.prefetch_related('wordtotals').annotate(
+            count=Sum('wordtotals__count')
         ).exclude(phrase__in=phrases_to_ignore).order_by('-count')
 
 class PhraseDetailAPIView(generics.RetrieveAPIView):
