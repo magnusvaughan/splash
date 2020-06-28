@@ -42,6 +42,7 @@ class Home extends Component {
   }
 
   render() {
+    const { loaded } = this.state;
     return (
       <div className="container mx-auto">
         <div className="flex flex-col">
@@ -66,7 +67,7 @@ class Home extends Component {
                           <div className="flex items-center">
                             <div className="ml-4">
                               <div className="text-sm leading-5 text-gray-900">
-                                <Link to={`/phrase`}>
+                                <Link to={`/phrase/${phraselist.id}`}>
                                   {phraselist.phrase}
                                 </Link>
                               </div>

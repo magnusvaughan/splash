@@ -66,12 +66,8 @@ class App extends Component {
         </nav>
 
         <Switch>
-          <Route path="/phrase">
-            <Phrase />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
+          <Route path="/phrase/:id" component={Phrase}/>
+          <Route path="/" component={Home} />
         </Switch>
       </Router>
     );
