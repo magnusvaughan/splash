@@ -20,7 +20,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    fetch("api/phraselist")
+    fetch("api/phraselist/")
       .then((response) => {
         console.log(response);
         if (response.status > 400) {
