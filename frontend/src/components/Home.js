@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Phrase from "./Phrase";
-import Nav from "./Nav"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
 
 class Home extends Component {
   constructor(props) {
@@ -39,7 +44,6 @@ class Home extends Component {
   render() {
     return (
       <div className="container mx-auto">
-        <Nav />
         <div className="flex flex-col">
           <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div className="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
@@ -62,7 +66,7 @@ class Home extends Component {
                           <div className="flex items-center">
                             <div className="ml-4">
                               <div className="text-sm leading-5 text-gray-900">
-                                <Link to={`/phrase/${phraselist.id}`}>
+                                <Link to={`/phrase`}>
                                   {phraselist.phrase}
                                 </Link>
                               </div>
