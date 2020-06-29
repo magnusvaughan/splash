@@ -1,4 +1,6 @@
 from django.views.generic import ListView, DetailView
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -32,12 +34,20 @@ class PhraselistListCreate(generics.ListCreateAPIView):
             count=Sum('wordtotals__count')
         ).exclude(phrase__in=phrases_to_ignore).order_by('-count')
 
+    @method_decorator(cache_page(3600))
+    def dispatch(self, *args, **kwargs):
+        return super(PhraselistListCreate, self).dispatch(*args, **kwargs)
+
 class PhraseDetailAPIView(generics.RetrieveAPIView):
     queryset = Phrase.objects.all()
     serializer_class = PhraseSerializer
 
     def get_queryset(self):
         return Phrase.objects.prefetch_related('wordtotals')
+
+    @method_decorator(cache_page(3600))
+    def dispatch(self, *args, **kwargs):
+        return super(PhraseDetailAPIView, self).dispatch(*args, **kwargs)
 
 class WordTotalListCreate(generics.ListCreateAPIView):
     serializer_class = WordtotalSerializer
